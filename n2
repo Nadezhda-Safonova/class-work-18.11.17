@@ -1,0 +1,67 @@
+/*
+Делала в паре с Екатериной Морозовой.
+Напишите программу выписывающую из массива все числа имеющие ровно 3 делителя.
+Программа должна быть эффективна по времени. Гарантируется, что в массиве таких
+чисел не менее трети.
+
+*/
+
+/* Три делителя может быть только у квадрата простого числа p (1, p, p^2).
+Из теории чисел известно, что при делении на 24 квадрат простого числа даёт в
+остатке 1. Если данное число проходит эту проверку, то проверяем на простоту
+корень этого числа.
+Так как гарантируется, что в массиве таких чисел не менее трети, то заводим
+счётчик количества не прошедших проверку чисел. Максимальное значение он может
+принимать 2*(N/3).
+*/
+
+#include <iostream>
+#include <cstdlib>
+#include <math.h>
+
+using namespace std;
+
+// Проверка на простоту числа a
+bool isPrime(long a){
+if( a == 2) return true;
+if( (a == 0) || (a%2 == 0) ) return false;
+if ( a == 1 ) return false;
+int k = sqrt(a);
+for( long i = 3; i <= k; i++)
+if( a % i == 0) return false;
+return true;
+}
+
+bool isThree(long a){
+if( a == 4) return true;
+if( a == 9) return true;
+if( a % 24 == 1) { //По свойству квадрата простого числа
+long b = sqrt(a);
+if( b*b == a) { //Проверка при округлении int
+if( isPrime(b)) return true;
+}
+}
+return false;
+}
+
+int main(int argc, char** argv){
+long N;
+// long deb[] = {4,8,16,26,41,49,61,159,93,1,9,169};
+cout « "Enter the size of array " « endl;
+cin » N;
+long arr[N];
+for( long i = 0; i < N; i++) /*arr[i] = deb[i];*/ cin » arr[i];
+for( long i = 0; i < N; i++){
+long cnt = 2*(N/3)+2; //Максимальное число не прошедших
+// проверку на три делителя
+if( cnt == 0) {
+cout « arr[i] « endl;
+continue;
+}
+if( isThree(arr[i]) ) cout « arr[i] « endl;
+else {
+cnt--;
+}
+}
+
+}
