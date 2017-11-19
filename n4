@@ -1,0 +1,63 @@
+//Делала в паре с Екатериной Морозовой
+/*
+Напишите программу находящую в двумерном массиве элементы значения которых ровно
+втрое больше суммы индексов этого элемента.
+В этой задаче массив неравномерен по ширине, т.е. размеры подмассивов
+могут отличаться. Для удобства размеры подмассивов должны храниться,
+как первые элементы
+подмассивов(т.е. под нулевым индексом). Способ ввода остаётся на ваше усмотрение.
+*/
+
+/*
+Input:
+N - количество подмассивов
+N1 a1 a2 a3 ... aN1
+N2 a1 a2 a3 ... aN2
+...
+NN a1 a2 a3 ... aNN
+Пример:
+2
+2 3 5
+3 6 5 12
+Output:
+3
+6
+12
+*/
+
+#include <iostream>
+#include <cstdlib>
+
+using namespace std;
+
+int main(int argc, char** argv){
+long N;
+cout « "Enter the number of subarray" « endl;
+cin » N;
+long* matrix[N];
+//Заполнение двумерного массива
+for( long i = 0; i < N; i++){
+cout « "Enter the subarray " « i + 1;
+cout « " (the first element of subarray is the size)" « endl;
+long len;
+cin » len;
+matrix[i] = new long [len + 1];
+long* p = matrix[i]; //temp
+p[0] = len + 1;
+for( long j = 1; j < (len + 1); j++) {
+cin » p[j];
+}
+}
+//Обработка данных
+for( long i = 0; i < N; i++){
+long* p = matrix[i];
+for( long j = 1; j < p[0]; j++){
+// cout « i « " " « j « " " « p[j] « endl;
+if( p[j] == 3*(i + j)) cout « p[j] « endl;
+}
+}
+for( long i = 0; i < N; i++) delete [] matrix[i];
+system("PAUSE");
+return EXIT_SUCCESS;
+
+}
